@@ -119,7 +119,7 @@ def normalize10day(stocks):
 
 # <codecell>
 
-print "loading data.."
+print("loading data..")
 train = np.array(p.read_table('./training.csv', sep = ","))
 test = np.array(p.read_table('./test.csv', sep = ","))
 
@@ -153,11 +153,11 @@ X = X_stockdata
 y_stockdata = np.vstack([train[:, [46 + 5*w, 49 + 5*w]] for w in windows])
 y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
 
-print "this step done"
+print("this step done")
 
 # <codecell>
 
-print "preparing models"
+print("preparing models")
 
 modelname = "lasso"
 
@@ -177,26 +177,27 @@ if modelname == "randomforest":
     C = np.linspace(50, 300, num = 10)
     models = [RandomForestClassifier(n_estimators = int(c)) for c in C]
 
-print "calculating cv scores"
+print("calculating cv scores")
+
 cv_scores = [0] * len(models)
 for i, model in enumerate(models):
     # for all of the models, save the cross-validation scores into the array cv_scores
     cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, scoring = auc_scorer))
     #cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, score_func = auc))
-    print " (%d/%d) C = %f: CV = %f" % (i + 1, len(C), C[i], cv_scores[i])
+    print(" (%d/%d) C = %f: CV = %f" % (i + 1, len(C), C[i], cv_scores[i]))
 
 # find which model and C is the best
 best = cv_scores.index(max(cv_scores))
 best_model = models[best]
 best_cv = cv_scores[best]
 best_C = C[best]
-print "BEST %f: %f" % (best_C, best_cv)
+print("BEST %f: %f" % (best_C, best_cv))
 
-print "training on full data"
+print ("training on full data")
 # fit the best model on the full data
 best_model.fit(X, y)
 
-print "prediction"
+print ("prediction")
 # do a prediction and save it
 pred = best_model.predict_proba(X_test)[:,1]
 testfile = p.read_csv('./test.csv', sep=",", na_values=['?'], index_col=[0,1])
@@ -207,5 +208,5 @@ testindices = [100 * D + StId for (D, StId) in testfile.index]
 pred_df = p.DataFrame(np.vstack((testindices, pred)).transpose(), columns=["Id", "Prediction"])
 pred_df.to_csv('./predictions/' + modelname + '/' + modelname + ' ' + strftime("%m-%d %X") + " C-" + str(round(best_C,4)) + " CV-" + str(round(best_cv, 4)) + ".csv", index = False)
 
-print "submission file created"
+print ("submission file created")
 
