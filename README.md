@@ -3,8 +3,7 @@
 ################################################################################
 
 Our code and process notebook for our analysis and predictive modeling
-approaches to understand directional stock movements. We have launched a website
-to showcase our work at https://sites.google.com/site/predictingstockmovement/
+approaches to understand directional stock movements. 
 
 ################################################################################
 ## Objective
@@ -13,22 +12,6 @@ The objective was the predict the directional movement of a stock on day 10, giv
 the opening, closing, min, max, and volume of a stock in the previous 9 days 
 (and given the opening price of a stock on day 10)
 
-################################################################################
-## Team
-################################################################################
-Team Name: Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo
-
-Team Members: William Chen '14, Sebastian Chiu '14, Salena Cui '15, Carl Gao '15
-
-################################################################################
-## Result
-################################################################################
-We submitted our Ridge-Random Forest model to the Boston Data Week hackathon
-hosted at Hack/Reduce. Information about the competition is available at 
-https://inclass.kaggle.com/c/boston-data-festival-hackathon
-
-We placed 1st out of 21 teams, and were able to achieve a 94.119% AUC on the
-private leaderboard
 
 ################################################################################
 ## Files
